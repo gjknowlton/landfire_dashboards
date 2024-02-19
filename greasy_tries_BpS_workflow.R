@@ -70,7 +70,7 @@ bps_conus_atts <- read.csv("inputs/LF20_BPS_220.csv")
 levels(bps_aoi)[[1]] <- bps_conus_atts
 activeCat(bps_aoi) <- "VALUE"
 
-
+# build attribute table for AOI
 bps_aoi_atts <- values(bps_aoi, dataframe = T, na.rm = T) %>%
   table(dnn = "VALUE") %>%
   as.data.frame() %>%
@@ -86,8 +86,11 @@ bps_aoi_atts <- values(bps_aoi, dataframe = T, na.rm = T) %>%
 # make vector of bpss to set to NA (delete?)  
 bpss_to_delete <- bps_aoi_atts$VALUE[bps_aoi_atts$REL_PERCENT < 5]
 
-bps_aoi[bps_aoi %in% bpss_to_delete] <- NA
+# subset the raster
+bps_aoi_5per <- bps_aoi
 
-activeCat(bps_aoi) <- "BPS_NAME"
+bps_aoi_5per[bps_aoi_5per %in% bpss_to_delete] <- NA
 
-plot(bps_aoi)
+activeCat(bps_aoi_5per) <- "BPS_NAME"
+
+plot(bps_aoi_5per)
