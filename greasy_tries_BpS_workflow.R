@@ -101,8 +101,10 @@ bps_aoi_5per <- bps_aoi
 
 bps_aoi_5per[bps_aoi_5per %in% bpss_to_delete] <- NA
 
+# set category for map
 activeCat(bps_aoi_5per) <- "BPS_NAME"
 
+# jank map
 plot(bps_aoi_5per)
 
 
