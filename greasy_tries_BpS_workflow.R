@@ -14,18 +14,28 @@ library(terra)
 library(tidyverse)
 
 # create directories
-dir.create('inputs')
+#dir.create('inputs')
 # paste shapefile in data directory (example will be central UP assessment area)
-dir.create('outputs')
+#dir.create('outputs')
 
-# load shape
-shp <- st_read("inputs/") %>% 
+# load shapes
+shp <- st_read("inputs/cup_final.shp") %>% 
   st_transform(crs = 5070) %>%
   st_union() %>%
   st_sf()
 
 vect(shp)
 plot(shp)
+
+
+mi_shp <- st_read("inputs/mi_cntys.shp") %>% 
+  st_transform(crs = 5070) %>%
+  st_union() %>%
+  st_sf()
+
+vect(mi_shp)
+plot(mi_shp)
+
 
 
 ## Get LANDFIRE BpS data using rlandfire package -----
@@ -48,7 +58,7 @@ ncal <- landfireAPI(products,
                     resolution, 
                     path = save_file)
 # unzip
-utils::unzip(zipfile = 'outputs/file13046dde442.zip', exdir = files_go_here)
+utils::unzip(zipfile = 'outputs/file222032a3185.zip', exdir = files_go_here)
 
 
 ## GIS work -----
@@ -96,3 +106,5 @@ activeCat(bps_aoi_5per) <- "BPS_NAME"
 
 # jank map
 plot(bps_aoi_5per)
+
+
